@@ -1,0 +1,10 @@
+func singleNumber(nums []int) int {
+    ans := 0
+    for _, n := range nums {
+        // fmt.Print(ans,"^",n,"=")
+        ans = ans ^ n
+        // fmt.Println(ans)
+    }
+
+    return ans
+}
