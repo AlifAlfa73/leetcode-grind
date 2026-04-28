@@ -1,0 +1,12 @@
+func missingNumber(nums []int) int {
+    expectedSum := 0
+    actualSum := 0
+
+    for i, num := range nums {
+        expectedSum += i
+        actualSum += num
+    }
+    expectedSum += len(nums)
+
+    return expectedSum - actualSum
+}

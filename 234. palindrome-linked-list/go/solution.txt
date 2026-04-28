@@ -1,0 +1,42 @@
+/**
+ * Definition for singly-linked list.
+ * type ListNode struct {
+ *     Val int
+ *     Next *ListNode
+ * }
+ */
+func isPalindrome(head *ListNode) bool {
+    slow := head
+    fast := head
+
+    // search mid
+    for fast != nil && fast.Next != nil {
+        slow = slow.Next
+        fast = fast.Next.Next
+    }
+
+    // fmt.Println(slow.Val)
+
+    // reverse 2nd half
+    var prev *ListNode
+    for slow != nil {
+        next := slow.Next
+        slow.Next = prev
+        prev = slow
+        slow = next
+    }
+
+    start1 := head // the original start
+    start2 := prev // the start of the second half
+
+    // compare
+    for start2 != nil && start1 != nil {
+        if start1.Val != start2.Val {
+            return false
+        }
+        start1 = start1.Next
+        start2 = start2.Next
+    }
+
+    return true
+}
