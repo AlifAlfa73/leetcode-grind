@@ -1,0 +1,44 @@
+// after reading solution 
+func moveZeroes(nums []int)  {
+    lastNonZeroElementIdx := 0
+
+    for i := 0; i < len(nums); i++ {
+        if nums[i] != 0 {
+            temp := nums[i]
+            nums[i] = nums[lastNonZeroElementIdx]
+            nums[lastNonZeroElementIdx] = temp
+            lastNonZeroElementIdx++
+        }
+    }
+} 
+
+// // my suboptimal dirty solution
+// func moveZeroes(nums []int)  {
+//     nonZeroIdx := 0
+//     idx := 0
+
+//     for nonZeroIdx < len(nums) && nums[nonZeroIdx] == 0  {
+//             nonZeroIdx++
+//         }
+
+//     for idx < len(nums) && nonZeroIdx < len(nums) {
+//         for nonZeroIdx < len(nums) && nums[nonZeroIdx] == 0  {
+//             nonZeroIdx++
+//         }
+
+//         if nums[idx] == 0 && nonZeroIdx < len(nums) {
+//             nums[idx] = nums[nonZeroIdx]
+//             nums[nonZeroIdx] = 0
+//             nonZeroIdx++
+//         }
+//         // fmt.Println(nums)
+
+
+//         idx++
+//         if nonZeroIdx < idx {
+//             nonZeroIdx++
+//         }
+//     }
+
+//     return
+// }
