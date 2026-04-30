@@ -1,0 +1,30 @@
+/**
+ * Definition for a binary tree node.
+ * type TreeNode struct {
+ *     Val int
+ *     Left *TreeNode
+ *     Right *TreeNode
+ * }
+ */
+func isSymmetric(root *TreeNode) bool {
+    if root == nil {
+        return true
+    }
+
+    return isFlip(root.Left, root.Right)
+}
+
+func isFlip(root1 *TreeNode, root2 *TreeNode) bool {
+    if root1 == nil || root2 == nil {
+        if root1 == root2 {
+            return true
+        }
+
+        return false
+    }
+    if root1.Val != root2.Val {
+        return  false
+    }
+
+    return isFlip(root1.Left, root2.Right) && isFlip(root1.Right, root2.Left)
+}
