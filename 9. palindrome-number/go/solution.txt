@@ -1,0 +1,46 @@
+// reverse number solution
+func isPalindrome(x int) bool {
+    if  x < 0 {
+        return false
+    }
+
+    reverse := 0
+    origX := x
+    for x > 0 {
+        reverse *= 10
+        digit := x % 10
+        reverse += digit
+        x = x / 10
+    }
+
+    return reverse == origX
+}
+
+// initial solution
+// func isPalindrome(x int) bool {
+//     if x < 0 {
+//         return false
+//     }
+
+//     digits := []int{}
+//     for x > 0 {
+//         digit := x % 10
+//         digits = append(digits, digit)
+
+//         x = x / 10
+//     }
+
+//     left := 0
+//     right := len(digits)-1
+
+//     for left < right {
+//         if digits[left] != digits[right] {
+//             return false
+//         }
+
+//         left++
+//         right--
+//     }
+
+//     return true
+// }
