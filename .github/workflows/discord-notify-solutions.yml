@@ -1,0 +1,36 @@
+# Notify Discord when new solution.txt files are pushed to main.
+#
+# Required repository secrets (Settings → Secrets and variables → Actions):
+#   DISCORD_WEBHOOK_URL  — Discord incoming webhook URL (no query string).
+#   DISCORD_THREAD_ID    — Optional. If set, append ?thread_id=... so messages go to that thread.
+#
+# The notify script only posts for newly added paths matching: "{id}. {slug}/{lang}/solution.txt".
+
+name: Discord notify new solutions
+
+on:
+  push:
+    branches: [main]
+
+concurrency:
+  group: discord-notify-${{ github.ref }}
+  cancel-in-progress: false
+
+jobs:
+  notify:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Post to Discord for each new solution
+        env:
+          GIT_BEFORE: ${{ github.event.before }}
+          GIT_AFTER: ${{ github.event.after }}
+          GITHUB_REPOSITORY: ${{ github.repository }}
+          GITHUB_SHA: ${{ github.sha }}
+          GITHUB_ACTOR: ${{ github.actor }}
+          DISCORD_WEBHOOK_URL: ${{ secrets.DISCORD_WEBHOOK_URL }}
+          DISCORD_THREAD_ID: ${{ secrets.DISCORD_THREAD_ID }}
+        run: python3 scripts/notify_discord_push.py
