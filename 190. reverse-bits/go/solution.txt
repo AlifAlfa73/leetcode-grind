@@ -1,0 +1,14 @@
+func reverseBits(n int) int {
+    reverse := 0
+    // fmt.Printf("%08b\n", n)
+    for i := 0; i < 31; i++ {
+        lastBit := n & 1
+        reverse = reverse ^ lastBit
+        n >>= 1
+        reverse <<= 1
+    }
+
+    // fmt.Printf("%08b\n", reverse)
+
+    return reverse 
+}
