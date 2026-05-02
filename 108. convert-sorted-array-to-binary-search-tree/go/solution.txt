@@ -1,0 +1,37 @@
+/**
+ * Definition for a binary tree node.
+ * type TreeNode struct {
+ *     Val int
+ *     Left *TreeNode
+ *     Right *TreeNode
+ * }
+ */
+func sortedArrayToBST(nums []int) *TreeNode {
+    return dfs(nums, 0, len(nums)-1)
+}
+
+func dfs(nums []int, start, end int) *TreeNode{
+    // 0 element
+    if end < start {
+        return nil
+    }
+
+    // 1 element
+    if end == start {
+        return &TreeNode{
+            Val: nums[start],
+            Left: nil,
+            Right: nil,
+        }
+    }
+
+    // 2+ element, split the array
+    mid := start + (end-start) / 2
+    // fmt.Println(start, end, mid)
+
+    return &TreeNode{
+        Val: nums[mid],
+        Left: dfs(nums, start, mid-1),
+        Right: dfs(nums, mid+1, end),
+    }
+}
