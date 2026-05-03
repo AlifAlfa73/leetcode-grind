@@ -1,0 +1,60 @@
+func sortedSquares(nums []int) []int {
+    var ans []int
+    var minIdx int
+    min := abs(nums[0])
+    for idx, num := range nums {
+        if abs(num) < min {
+            min = abs(num)
+            minIdx = idx
+        }
+    }
+
+    // init ans, traverse the array from minIdx 
+    ans = append(ans, nums[minIdx] * nums[minIdx])
+    left := minIdx - 1
+    right := minIdx + 1
+
+    for left >= 0 || right < len(nums) {
+        // fmt.Println(left,right)
+        if left < 0 { // if left is done, iterate right
+            ans = append(ans, nums[right] * nums[right])
+            right++
+            continue
+        }
+
+        if right >= len(nums) { // if right is done, iterate left
+            ans = append(ans, nums[left] * nums[left])
+            left--
+            continue
+        }
+
+        // otherwise, iterate based on which one is lowest
+        if abs(nums[left]) < abs(nums[right]) {
+            ans = append(ans, nums[left] * nums[left])
+            left--
+            continue
+        } 
+
+        ans = append(ans, nums[right] * nums[right])
+        right++
+        continue
+    }
+
+    return ans
+}
+
+func abs(n int) int {
+    if n < 0 {
+        return -n
+    }
+
+    return n
+}
+
+func min(a, b int) int {
+    if a < b {
+        return a
+    }
+
+    return b
+}
