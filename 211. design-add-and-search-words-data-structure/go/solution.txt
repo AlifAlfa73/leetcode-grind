@@ -1,0 +1,58 @@
+type WordDictionary struct {
+    IsExist bool
+    Child []*WordDictionary
+}
+
+
+func Constructor() WordDictionary {
+    return WordDictionary{
+        Child: make([]*WordDictionary, 26),
+    }
+}
+
+
+func (this *WordDictionary) AddWord(word string)  {
+    cur := this
+    for _, char := range word {
+        idx := char - 'a'
+        if cur.Child[idx] == nil {
+            new := Constructor()
+            cur.Child[idx] = &new
+        }
+
+        cur = cur.Child[idx]
+    }
+
+    cur.IsExist = true
+}
+
+
+func (this *WordDictionary) Search(word string) bool {
+    cur := this
+    for idx, char := range word {
+        if char == '.' {
+            for _, c := range cur.Child {
+                if c != nil && c.Search(word[idx+1:]) == true {
+                    return true
+                }
+            }
+            return false
+        }
+        idx := char - 'a'
+        if cur.Child[idx] == nil {
+            return false
+        }
+
+        cur = cur.Child[idx]
+    }
+
+    return cur.IsExist
+}
+
+
+/**
+ * Your WordDictionary object will be instantiated and called as such:
+ * obj := Constructor();
+ * obj.AddWord(word);
+ * param_2 := obj.Search(word);
+ */
