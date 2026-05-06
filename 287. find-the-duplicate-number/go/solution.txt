@@ -1,0 +1,30 @@
+
+func findDuplicate(nums []int) int {
+    shortIdx := 0
+    longIdx := 0
+    for {
+        fmt.Println(shortIdx, longIdx)
+
+        shortIdx = nums[shortIdx]
+        longIdx = nums[nums[longIdx]]
+
+        if shortIdx == longIdx {
+            break
+        }
+    }
+
+    longIdx = 0
+
+    for {
+        shortIdx = nums[shortIdx]
+        longIdx = nums[longIdx]
+
+        if shortIdx == longIdx {
+            return shortIdx
+        }
+    }
+
+
+
+    return -1
+}
