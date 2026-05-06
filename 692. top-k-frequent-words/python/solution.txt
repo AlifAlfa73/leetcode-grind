@@ -1,0 +1,31 @@
+class Solution:
+    def topKFrequent(self, words: List[str], k: int) -> List[str]:
+        """
+        :type words: List[str]
+        :type k: int
+        :rtype: List[str]
+        """
+
+        wordCount = {}
+
+        for word in words:
+            if not word in wordCount:
+                wordCount[word] = 1
+            else:
+                wordCount[word] = wordCount[word] + 1
+
+            max_heap = [(-val, key) for key, val in wordCount.items()]
+            heapq.heapify(max_heap)
+
+        # To get the maximum element
+        ans = []
+        for i in range(k):
+            neg_val, key = heapq.heappop(max_heap)
+            ans.append(key)
+
+
+        return ans
+
+        
+
+        
