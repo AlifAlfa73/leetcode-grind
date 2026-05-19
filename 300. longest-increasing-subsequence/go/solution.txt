@@ -1,0 +1,33 @@
+func lengthOfLIS(nums []int) int {
+    dp := make([]int, len(nums))
+    dp[0] = 1
+
+    for i := 1; i < len(nums); i++ {
+        var max int
+        for j := 0; j < i; j++ {
+            if nums[j] < nums[i] {
+                max = maxint(max, dp[j])
+            }
+        }
+        dp[i] = max + 1
+    }
+
+    var ans int
+    for _, res := range dp {
+        if res > ans {
+            ans = res
+        }
+    }
+
+    // fmt.Println(dp)
+
+    return ans
+}
+
+func maxint(a,b int) int {
+    if a > b {
+        return a
+    }
+
+    return b
+}
