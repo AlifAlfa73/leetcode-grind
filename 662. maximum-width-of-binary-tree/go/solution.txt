@@ -1,0 +1,54 @@
+/**
+ * Definition for a binary tree node.
+ * type TreeNode struct {
+ *     Val int
+ *     Left *TreeNode
+ *     Right *TreeNode
+ * }
+ */
+func widthOfBinaryTree(root *TreeNode) int {
+    var leftmostByLevel []int
+    var rightmostByLevel []int
+
+    buildNodesByLevel(root, &leftmostByLevel, &rightmostByLevel, 0, 0)
+
+    // fmt.Println(leftmostByLevel)
+    // fmt.Println(rightmostByLevel)
+
+    max := 0
+    for i := 0; i < len(leftmostByLevel); i++ {
+        width := rightmostByLevel[i] - leftmostByLevel[i]  + 1
+        if width > max {
+            max = width
+        }
+    }
+    
+
+    return max
+}
+
+func buildNodesByLevel(root *TreeNode, leftmostByLevel *[]int, rightmostByLevel *[]int, pos, level int) {
+    if root == nil {
+        return
+    }
+
+
+    if len(*leftmostByLevel) <= level {
+        *leftmostByLevel = append(*leftmostByLevel, pos)
+        *rightmostByLevel = append(*rightmostByLevel, pos)
+    } else {
+        if (*leftmostByLevel)[level] > pos {
+            (*leftmostByLevel)[level] = pos
+        }
+
+        if (*rightmostByLevel)[level] < pos {
+            (*rightmostByLevel)[level] = pos
+        }
+    }
+
+
+    buildNodesByLevel(root.Left, leftmostByLevel, rightmostByLevel, pos*2, level+1)
+    buildNodesByLevel(root.Right, leftmostByLevel, rightmostByLevel, pos*2+1, level+1)
+
+    return
+}
