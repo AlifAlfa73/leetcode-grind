@@ -1,0 +1,44 @@
+func findOrder(numCourses int, prerequisites [][]int) []int {
+    inBoundCount := make([]int, numCourses)
+    nodeToNeighborMap := make([][]int, numCourses)
+    // nodeToNeighborMap := make(map[int]int)
+
+    for _, preq := range prerequisites {
+        inBoundCount[preq[0]]++
+        nodeToNeighborMap[preq[1]] = append(nodeToNeighborMap[preq[1]], preq[0])
+    }
+
+    //init queue
+    var queue []int
+    for i := 0; i < numCourses; i++ {
+        if inBoundCount[i] == 0 {
+            queue = append(queue, i)
+        }
+    }
+
+    var ans []int
+    for len(queue) != 0 {
+        curNode := queue[0]
+        queue = queue[1:]
+
+        // 'remove' this node (finish the course)
+        ans = append(ans, curNode)
+        neighbors := nodeToNeighborMap[curNode]
+        for _, n := range neighbors {
+            inBoundCount[n]--
+            if inBoundCount[n] == 0 {
+                queue = append(queue, n)
+            }
+        }
+    }
+
+    // fmt.Println("----")
+    // fmt.Println(inBoundCount)
+    // fmt.Println(nodeToNeighborMap)
+
+    if len(ans) != numCourses {
+        return []int{}
+    }
+
+    return ans
+}
