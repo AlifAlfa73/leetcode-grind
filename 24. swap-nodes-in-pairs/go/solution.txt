@@ -1,0 +1,25 @@
+/**
+ * Definition for singly-linked list.
+ * type ListNode struct {
+ *     Val int
+ *     Next *ListNode
+ * }
+ */
+func swapPairs(head *ListNode) *ListNode {
+    if head == nil {
+        return head
+    }
+
+    if head.Next == nil {
+        return head
+    }
+
+    first := head
+    second := first.Next
+    third := swapPairs(second.Next)
+
+    second.Next = first
+    first.Next = third
+
+    return second
+}
