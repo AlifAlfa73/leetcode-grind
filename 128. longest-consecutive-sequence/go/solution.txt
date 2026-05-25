@@ -1,0 +1,57 @@
+func longestConsecutive(nums []int) int {
+    groupMap := make(map[int]int)
+
+    for _, num := range nums {
+        groupMap[num] = num
+    }
+
+    for _, num := range nums {
+        if _, ok := groupMap[num+1]; ok {
+            union(groupMap, num, num+1)
+        }
+    }
+
+    countMap := make(map[int]int)
+    doneMap := make(map[int]bool)
+    max := 0
+    for _, num := range nums {
+        if doneMap[num] {
+            continue
+        }
+        group := find(groupMap, num)
+        countMap[group]++
+        if countMap[group] > max {
+            max = countMap[group]
+        }
+        doneMap[num] = true
+    }
+
+    return max
+}
+
+func find(groupMap map[int]int, num int) int {
+    // for groupMap[num] != num {
+    //     num = groupMap[num]
+    // }
+
+    // return num
+
+    //need help
+
+    root := num
+    for groupMap[root] != root {
+        root = groupMap[root]
+    }
+    // Pass 2: Compress the path by pointing all nodes on the path to the root
+    curr := num
+    for curr != root {
+        next := groupMap[curr]
+        groupMap[curr] = root
+        curr = next
+    }
+    return root
+}
+
+func union(groupMap map[int]int, num1 int, num2 int) {
+    groupMap[num2] = find(groupMap, num1)
+}
