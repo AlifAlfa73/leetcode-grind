@@ -1,0 +1,28 @@
+func rotate(nums []int, k int)  {
+    // obvious way
+    // ans := make([]int, len(nums))
+    // for idx, num := range nums {
+    //     newIdx := idx + k
+    //     newIdx = newIdx % len(nums)
+
+    //     ans[newIdx] = num 
+    // }
+
+    // copy(nums, ans)
+
+    // reverse way
+    k %= len(nums)
+    reverse(nums, 0, len(nums)-1)
+    reverse(nums, 0, k-1)
+    reverse(nums, k, len(nums)-1)
+}
+
+func reverse(nums []int, idx1 int, idx2 int) {
+    for idx1 < idx2 {
+        temp := nums[idx1]
+        nums[idx1] = nums[idx2]
+        nums[idx2] = temp
+        idx1++
+        idx2--
+    }
+}
