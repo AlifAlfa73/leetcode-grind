@@ -1,0 +1,44 @@
+/**
+ * Definition for a binary tree node.
+ * type TreeNode struct {
+ *     Val int
+ *     Left *TreeNode
+ *     Right *TreeNode
+ * }
+ */
+func pathSum(root *TreeNode, targetSum int) [][]int {
+    var ans [][]int
+    var path []int
+    
+    if root == nil {
+        return ans
+    }
+
+    searchSum(root, &ans, path, targetSum)
+    
+    return ans
+}
+
+func searchSum(root *TreeNode, ans *[][]int, path []int, sum int) {
+    sum = sum - root.Val
+    path = append(path, root.Val)
+    // fmt.Println(path,sum)
+    // evaluate the path
+    if root.Left == nil && root.Right == nil {
+        if sum == 0 {
+            // fmt.Println(path)
+            temp := make([]int, len(path))
+            copy(temp, path)
+            *ans = append(*ans, temp)
+        }
+    }
+
+    if root.Left != nil {
+        searchSum(root.Left, ans, path, sum)
+    }
+
+    if root.Right != nil {
+        searchSum(root.Right, ans, path, sum)
+    }
+}
+
