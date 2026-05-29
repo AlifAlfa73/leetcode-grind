@@ -1,0 +1,37 @@
+/**
+ * Definition for singly-linked list.
+ * type ListNode struct {
+ *     Val int
+ *     Next *ListNode
+ * }
+ */
+func oddEvenList(head *ListNode) *ListNode {
+    if head == nil {
+        return head
+    }
+    dummyEvenHead := &ListNode{}
+
+    cur := head
+    curEven := dummyEvenHead
+    for cur != nil && cur.Next != nil {
+        even := cur.Next
+        // fmt.Println(cur.Val, even.Val)
+
+        cur.Next = even.Next
+    
+        even.Next = nil
+        curEven.Next = even
+
+        cur = cur.Next
+        curEven = curEven.Next
+    }
+    
+    cur = head
+    for cur.Next != nil {
+        cur = cur.Next
+    }
+
+    cur.Next = dummyEvenHead.Next
+
+    return head
+}
