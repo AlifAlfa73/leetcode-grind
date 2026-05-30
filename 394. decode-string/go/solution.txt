@@ -1,0 +1,46 @@
+func decodeString(s string) string {
+    var stack []rune
+
+    for _, r := range s {
+        if r != ']' {
+            stack = append(stack, r)
+        } else {
+            // pop stack until got ]
+            word := ""
+            for stack[len(stack)-1] != '[' {
+                pop := stack[len(stack)-1]
+                stack = stack[:len(stack)-1]
+                word = string(pop) + word
+            }
+
+            // pop the ']')
+            stack = stack[:len(stack)-1]
+
+            mult := 0
+            base := 1
+            for len(stack) != 0 && unicode.IsDigit(stack[len(stack)-1]) {
+                pop := int(stack[len(stack)-1] - '0')
+                stack = stack[:len(stack)-1]
+                mult += base * pop
+                base *= 10
+            }
+
+            // debug
+            // fmt.Println(word, stack, mult)
+
+            // enter again with multiple
+            for i := 0; i < mult; i++ {
+                for _, r := range word {
+                    stack = append(stack, r)
+                }
+            }
+        }
+    }
+
+    ans := ""
+    for _, r := range stack {
+        ans += string(r)
+    }
+
+    return ans
+}
