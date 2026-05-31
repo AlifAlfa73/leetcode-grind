@@ -1,0 +1,26 @@
+func findMaxLength(nums []int) int {
+    // prefixSum := make([]int, len(nums))
+
+    prefixSumMap := make(map[int]int)
+    prefixSumMap[0] = -1
+
+    sum := 0 
+    maxLength := 0
+    for i, n := range nums {
+        if n == 0 {
+            sum--
+        } else {
+            sum++
+        }
+        
+        if val, ok := prefixSumMap[sum]; !ok{
+            prefixSumMap[sum] = i
+        } else {
+            if i - val > maxLength {
+                maxLength = i - val
+            }
+        }
+    }
+
+    return maxLength
+}
