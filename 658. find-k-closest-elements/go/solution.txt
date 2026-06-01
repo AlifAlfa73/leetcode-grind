@@ -1,0 +1,49 @@
+func findClosestElements(arr []int, k int, x int) []int {
+    // binarySearch
+    left, right := 0, len(arr)-1
+    var mid int
+    for left < right {
+        mid = left + (right-left)/2
+        if x > arr[mid] {
+            left = mid + 1
+        } else {
+            right = mid
+        }
+    }
+
+    // left/right will be closest idx bigger than x, we should check if x-1 is closest
+    start := left
+    if left != 0 && abs(arr[left-1] - x) <= abs(arr[left]-x) {
+        start = left - 1
+    }
+
+    left, right = start, start
+    for right - left + 1 < k {
+        if left == 0 {
+            right++
+            continue
+        }
+
+        if right == len(arr)-1 {
+            left--
+            continue
+        }
+
+        // fmt.Println(left, right)
+
+        if abs(arr[left-1] - x) <= abs(arr[right+1]-x) {
+            left--
+        } else {
+            right++
+        }
+    }
+    return arr[left:right+1]
+}
+
+func abs(a int) int {
+    if a < 0 {
+        return -a
+    }
+
+    return a
+}
