@@ -1,0 +1,33 @@
+func characterReplacement(s string, k int) int {
+    left := 0
+    right := 0
+    var maxLength int
+    count := make([]int, 26)
+    maxIdx :=  0
+    // count[maxIdx]++
+    
+    for right < len(s) {
+        newIdx := int(s[right] - 'A')
+        count[newIdx]++
+
+        if count[maxIdx] < count[newIdx] {
+            // fmt.Println("newMax", count, left, right, maxIdx)
+            maxIdx = newIdx
+        }
+
+        if right - left + 1 - count[maxIdx] > k {
+            // fmt.Println("shrink", left, right, maxIdx, count)
+            count[int(s[left] - 'A')]--
+            left++
+        }
+
+        if right - left + 1 > maxLength {
+            // fmt.Println(left, right)
+            maxLength = right - left +1
+        }
+
+        right++
+    }
+
+    return maxLength
+}
