@@ -1,0 +1,36 @@
+func canJump(nums []int) bool {
+
+    maxPoint := nums[0]
+
+    for i := 1; i <= maxPoint && i < len(nums); i++ {
+        if i + nums[i] > maxPoint {
+            maxPoint = i + nums[i]
+        }
+    }
+
+    return maxPoint >= len(nums) - 1
+}
+
+
+
+    // dynamic programming
+    // dp := make([]bool, len(nums))
+
+    // dp[len(nums)-1] = true
+
+    // for i := len(nums)-1; i >= 0; i-- {
+    //     span := nums[i]
+    //     // fmt.Println(i+span)
+    //     for j := i; j <= i + span && j < len(nums); j++ {
+    //         // fmt.Println(i,j)
+    //         if dp[j] {
+    //             dp[i] = true
+    //             break
+    //         }
+    //     }
+    //     // fmt.Println(i, dp)
+    // }
+
+    // // fmt.Println(dp)
+
+    // return dp[0]
