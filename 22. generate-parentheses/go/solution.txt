@@ -1,0 +1,27 @@
+func generateParenthesis(n int) []string {
+    var ans []string
+    generate("", n, n, &ans)
+
+    return ans
+}
+
+func generate(cur string, open, close int, ans *[]string) {
+    if open == 0  && close == 0 { // done
+        *ans = append(*ans, cur)
+        // fmt.Println(cur)
+        return
+    }
+
+    // put inside
+    if open != 0 {
+        new := cur + "("
+        generate(new, open-1, close, ans)
+    }
+
+    if close != 0 && close > open {
+        new := cur + ")"
+        generate(new, open, close-1, ans)
+    }
+    
+    return
+}
